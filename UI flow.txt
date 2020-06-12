@@ -1,0 +1,48 @@
+
+	login and register
+be able to connect to the database and we need to varify the login credentials.
+role specific interfaces (user & manager)
+
+	home 
+user - 
+-change the headings or remove 
+-add the option to scan 
+-history
+-accouns
+-logout
+(most of this is alread their now we need to make it work)
+
+	manager
+-stock viewer option
+- adding/edit of inventory option (navs)
+
+	managing accounts page
+-user and manager can edit their info and banking details(dont know if this is necessary)
+-user able to go to history if we still have this current page of managing account.
+
+	managing stock (navs from home)
+only manager
+-adding/ editing stock using the scanner and manually.
+
+
+	sale history
+user
+-recipts
+
+managers
+sales of the day (optional)
+
+
+	*** cart (from scanning)
+user 
+-be ale to see items that they scanned with the costs calculated
+-able to remove/add from a button
+
+manager (test cart for manager)
+-able to access a demo of how the user will see their cart, so they can view if the pricing is correct
+
+		checkout
+the payment option for users
+--have thier details that they need to fill in
+- commerce payment methods need to work, eg woocommerce
+- create a recipt for the customer
