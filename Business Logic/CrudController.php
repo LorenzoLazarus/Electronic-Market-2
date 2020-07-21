@@ -56,7 +56,7 @@ class CrudController
     }
 
     /* Add New Record */
-    public function add($formArray)
+    public function addProduct($formArray)
     {
         $title = $_POST['title'];
         $description = $_POST['description'];
@@ -73,7 +73,7 @@ class CrudController
     }
 
     /* Edit a Record */
-    public function edit($formArray)
+    public function editProduct($formArray)
     {
         $id = $_POST['id'];
         $title = $_POST['title'];
@@ -92,7 +92,7 @@ class CrudController
     }
 
     /* Delete a Record */
-    public function delete($id)
+    public function deleteProduct($id)
     {
         $dao = new Dao();
         
@@ -103,6 +103,104 @@ class CrudController
         $conn->query($sql);
         $dao->closeConnection();
     }
+
+    
+
+    /* Add New Record */
+    public function addSupplier($formArray)
+    {
+        $title = $_POST['title'];
+        $description = $_POST['description'];
+        $url = $_POST['url'];
+        $category = $_POST['category'];
+        
+        $dao = new Dao();
+        
+        $conn = $dao->openConnection();
+        
+        $sql = "INSERT INTO `tb_links`(`title`, `description`, `url`, `category`) VALUES ('" . $title . "','" . $description . "','" . $url . "','" . $category . "')";
+        $conn->query($sql);
+        $dao->closeConnection();
+    }
+
+        /* Edit a Record */
+    public function updateSupplier($formArray)
+    {
+
+    }
+    public function deleteSupplier($Supplier_id)
+    {
+        
+    }
+        public function readInventoryLocation()
+    {
+
+    }
+
+
+
+    /* Add New Record */
+    public function addInventoryLocation($formArray)
+    {
+        $title = $_POST['title'];
+        $description = $_POST['description'];
+        $url = $_POST['url'];
+        $category = $_POST['category'];
+        
+        $dao = new Dao();
+        
+        $conn = $dao->openConnection();
+        
+        $sql = "INSERT INTO `tb_links`(`title`, `description`, `url`, `category`) VALUES ('" . $title . "','" . $description . "','" . $url . "','" . $category . "')";
+        $conn->query($sql);
+        $dao->closeConnection();
+    }
+
+        /* Edit a Record */
+    public function updateInventoryLocation($formArray)
+    {
+
+    }
+    public function deleteInventory($Inventory_id)
+    {
+        
+    }
+        public function readAddress()
+    {
+
+    }
+
+
+
+    /* Add New Record */
+    public function addAddress($formArray)
+    {
+        $address = $_POST['address_id'];
+        $street = $_POST['street'];
+        $Suburb = $_POST['Suburb'];
+        $city = $_POST['city'];
+        
+        $dao = new Dao();
+        
+        $conn = $dao->openConnection();
+        
+        $sql = "INSERT INTO Addresses(`address_id`, `Street`, `Subburb`, `city`,) VALUES ('" . $title . "','" . $description . "','" . $url . "','" . $category . "')";
+        $conn->query($sql);
+        $dao->closeConnection();
+
+    }
+
+        /* Edit a Record */
+    public function updateAddress($formArray)
+    {
+
+    }
+    public function deleteAddress($Inventory_id)
+    {
+        
+    }
+
+
 }
 
 ?>

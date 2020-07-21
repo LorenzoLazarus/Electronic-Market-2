@@ -7,7 +7,7 @@
     <script src="https://cdn.rawgit.com/serratus/quaggaJS/0420d5e0/dist/quagga.min.js"></script>
     <style>
         #scannerSpace {
- 
+ box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
   max-width: 480px;
   margin: auto;
   text-align: center;
@@ -150,7 +150,7 @@ a:hover {
 				//initialize ajax so we can use php and db
 				$.ajax({
 					type: "POST",
-					url: '/products/get_barcode', //check with ajax methods
+					url: '/products/getBcode', //check with ajax methods
 					data: {upc: last_code}
 				});
             });

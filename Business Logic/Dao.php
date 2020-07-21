@@ -3,7 +3,7 @@
 class Dao
 {
 
-    private $server = "mysql:host=localhost;dbname=phpsamples";
+    private $server = "mysql:host=localhost;dbname=Self_Checkout";
 
     private $user = "root";
 
