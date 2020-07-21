@@ -179,7 +179,7 @@ var bestcode =[];
                     //initialize ajax so we can use php and db
                             $.ajax({
                             type: "POST",
-                            url: '/Products.php/getBcode', //check with ajax methods
+                            url: '/Products.php/setBcode', //check with ajax methods
                             //data: {upc: last_code}
                             data: {upc: code}
                             });
