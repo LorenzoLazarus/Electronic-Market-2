@@ -1,5 +1,5 @@
 <?php
-include_once 'Dao.php';
+include_once './Dao.php';
 
 class CrudController
 {
@@ -198,6 +198,31 @@ class CrudController
     public function deleteAddress($Inventory_id)
     {
         
+    }
+
+    public function insertPurcts()
+    {
+        $purchase_id = $_POST['purchase_id'];
+        $scanner_code = $_POST['scanner_code'];
+        $receiptNumber = $_POST['receiptNumber'];
+        $Date = $_POST['Date'];
+        $Cost = $_POST['Cost'];
+
+        $dao = new Dao();
+        $conn = $dao->openConnection();        
+        $scanner_code = mysql_real_escape_string($scanner_code);
+
+        $result = mysql_query("SELECT COUNT(*) AS num_rows FROM Purchase WHERE scanner_code='{$scanner_code}' LIMIT 1;");
+        $row = mysql_fetch_array($result);
+
+        if($row["num_rows"] > 0){ 
+        //Send error message
+        }else{
+            $sql = "INSERT INTO Purchase( `scanner_code`, `receiptNumber`, `Date`,`Cost`,) VALUES ('" . $scanner_code . "','" . $receiptNumber . "','" . $Date . "','" . $Cost . "')";
+            $conn->query($sql);
+            $dao->closeConnection(); 
+        }
+
     }
 
 

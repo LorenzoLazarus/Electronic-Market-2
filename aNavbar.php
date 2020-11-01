@@ -44,7 +44,7 @@
                         <a href="#accounts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Manage Accounts</a>
                         <ul class="collapse list-unstyled" id="accounts">
                             <li>
-                                <a href="#">Client Accounts</a>
+                                <a href="aClientAccounts.php">Client Accounts</a>
                             </li>
                             <li>
                                 <a href="aManagerAccounts.php">Employee Accounts</a>
@@ -93,8 +93,7 @@
                     </div>
                 </div>
             </nav>
-        </div>
-    </div>
+
 
 
             <script src="js/jquery.min.js"></script>

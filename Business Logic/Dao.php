@@ -14,7 +14,7 @@ class Dao
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
     );
 
-    public $con; //initially made is protected maybe public is better 
+    protected $con;
 
     /* Function for opening connection */
     public function openConnection()
@@ -24,7 +24,7 @@ class Dao
         {
             
             $this->con = new PDO($this->server, $this->user, $this->pass, $this->options);
-            echo 'successfully connected'
+            
             return $this->con;
         } 
         catch (PDOException $e) 

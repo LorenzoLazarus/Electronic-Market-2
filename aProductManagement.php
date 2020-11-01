@@ -17,6 +17,8 @@
 
     <link href="css/dashboard.css" rel="stylesheet" type="text/css" />
     <title>eCommerce | Product Management</title>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.22/datatables.min.css" />
 </head>
 
 <body id="wrapper">
@@ -24,50 +26,8 @@
 
         <h3>Product Management</h3>
         <hr>
-        <div class="table-responsive">
-            <div class="row">
-                <div class="col-lg-6">
-                    <h4 class="mt-2 mb-2 text-primary">All Products</h4>
-                </div>
-                <div class="col-lg-6">
-                    <button type="button" class="btn btn-primary m-1 float-right" data-toggle="modal" data-target="#addModal"><i class="fas fa-user-plus fa-lg"></i>&nbsp;&nbsp;Add New Product</button>
-                    <!--<a href="#" class="btn btn-success m-1 float-right"><i class="fas fa-table fa-lg">&nbsp;&nbsp;Export to Excel</i></a>-->
-                </div>
-            </div>
+        <div class="table-responsive" id="ShowProduct">
 
-            <table id="datatable" style="border-radius: 5px" class="table table-dark table-hover">
-                <thead>
-                    <tr style="border-bottom: gold 1px solid">
-                        <th scope="col">#</th>
-                        <th scope="col">Product Name</th>
-                        <th scope="col">Product Description</th>
-                        <th scope="col">Product Price</th>
-                        <th scope="col">Modify</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php for($i=1;$i<=50;$i++): ?>
-                    <tr>
-                        <td>
-                            <?= $i ?>
-                        </td>
-                        <td>Product
-                            <?= $i ?>
-                        </td>
-                        <td>Food</td>
-                        <td>R1<?= $i ?>
-                        </td>
-                        <td>
-                            <a href="#" title="View Details" class="text-success"><i class="fas fa-info-circle fa-md"></i></a>&nbsp;&nbsp;
-                            <a href="#" title="Edit" class="text-primary"><i class="fa-edit fa-lg"></i></a>&nbsp;&nbsp;
-                            <a href="#" title="Delete" class="text-danger"><i class="fas fa-trash-alt fa-md"></i></a>
-
-                        </td>
-                    </tr>
-                    <?php endfor; ?>
-
-                </tbody>
-            </table>
 
         </div>
         <!-- Add new product -->
@@ -85,8 +45,10 @@
                     <div class="modal-body">
                         <form action="" method="post" id="form-data">
                             <div class="form-group">
-                                <input type="text" name="fname" class="form-control mt-3" placeholder="Product Name"  required>
+                                <input type="text" name="fname" class="form-control mt-3" placeholder="Product Name" required>
                                 <input type="text" name="fdescription" class="form-control mt-3" placeholder="Product Description" required>
+                                <input type="text" name="fqtyinStock" class="form-control mt-3" placeholder="Product Quantity" required>
+                                <input type="text" name="freorderQuantity" class="form-control mt-3" placeholder="Reorder Quantity" required>
                                 <input type="text" name="fprice" class="form-control mt-3" placeholder="Product Price" required>
                                 <div class="form-group">
                                     <input type="submit" name="insert" id="insert" value="Add Product" class="btn btn-danger btn-block mt-4">
@@ -100,15 +62,41 @@
             </div>
         </div>
 
+        <!-- Edit product -->
+        <div class="modal fade" id="editModal">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Edit Product</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form action="" method="post" id="edit-form-data">
+                            <input type="hidden" name="id" id="id">
+                            <div class="form-group">
+                                <input type="text" name="fname" class="form-control mt-3" id="fname" required>
+                                <input type="text" name="fdescription" class="form-control mt-3" id="fdescription" required>
+                                <input type="text" name="fqtyinStock" class="form-control mt-3" id="fqtyinStock" required>
+                                <input type="text" name="freorderQuantity" class="form-control mt-3" id="freorderQuantity" required>
+                                <input type="text" name="fprice" class="form-control mt-3" id="fprice" required>
+                                <div class="form-group">
+                                    <input type="submit" name="update" id="update" value="Update Product" class="btn btn-primary btn-block mt-4">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
     </main>
 
 
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="DataTables/DataTables-1.10.20/js/jquery.dataTables.min.js" type="text/javascript"></script>
-    <script src="DataTables/DataTables-1.10.20/js/dataTables.bootstrap4.min.js" type="text/javascript"></script>
 
 
 
@@ -123,7 +111,7 @@
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 
 
@@ -133,11 +121,147 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
-            $("table").DataTable();
+            showAllProducts();
+
+            function showAllProducts() {
+                $.ajax({
+                    url: "action.php",
+                    type: "POST",
+                    data: {
+                        action: "view"
+                    },
+                    success: function(response) {
+                        //console.log(response);
+                        $("#ShowProduct").html(response);
+                        $("table").DataTable({
+                            order: [0, 'asc']
+                        });
+                    }
+                });
+            }
+            //insert ajax request
+            $("#insert").click(function(e) {
+                if ($("#form-data")[0].checkValidity()) {
+                    e.preventDefault();
+                    $.ajax({
+                        url: "action.php",
+                        type: "POST",
+                        data: $("#form-data").serialize() + "&action=insert",
+                        success: function(response) {
+                            Swal.fire({
+                                title: 'User added succesfully!',
+                                icon: 'success'
+                            })
+                            $("#addModal").modal('hide');
+                            $("#form-data")[0].reset();
+                            showAllProducts();
+                        }
+                    });
+                }
+
+            });
+            //Edit Product
+            $("body").on("click", ".editBtn", function(e) {
+                e.preventDefault();
+                edit_id = $(this).attr('id');
+                $.ajax({
+                    url: "action.php",
+                    type: "POST",
+                    data: {
+                        edit_id: edit_id
+                    },
+                    success: function(response) {
+                        data = JSON.parse(response);
+                        $("#id").val(data.product_id);
+                        $("#fname").val(data.product_name);
+                        $("#fdescription").val(data.product_description);
+                        $("fqtyinStock").val(data.quantitiy_in_stock)
+                        $("freorderQuantity").val(data.reorder_quantity)
+                        $("#fprice").val(data.product_price);
+
+                    }
+                });
+            });
+            //update ajax request
+            $("#update").click(function(e) {
+                if ($("#edit-form-data")[0].checkValidity()) {
+                    e.preventDefault();
+                    $.ajax({
+                        url: "action.php",
+                        type: "POST",
+                        data: $("#edit-form-data").serialize() + "&action=update",
+                        success: function(response) {
+                            Swal.fire({
+                                title: 'User updated succesfully!',
+                                icon: 'success'
+                            })
+                            $("#editModal").modal('hide');
+                            $("#edit-form-data")[0].reset();
+                            showAllProducts();
+                        }
+                    });
+                }
+
+            });
+
+            //delete ajax request
+            $("body").on("click", ".delBtn", function(e) {
+                e.preventDefault();
+                var tr = $(this).closest('tr');
+                del_id = $(this).attr('id');
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.value) {
+                         $.ajax({
+                             url: "action.php",
+                             type:"POST",
+                             data:{del_id:del_id},
+                             success:function(response){
+                                 tr.css('background-color','#ff6666')
+                                 Swal.fire(
+                                 'Deleted!',
+                                 'User deleted successfully!','success')
+                                 showAllProducts();
+                             }
+                         });
+                    }
+                    
+                });
+
+            });
+            //show user details
+            $("body").on("click", ".infoBtn", function(e){
+               e.preventDefault();
+                info_id = $(this).attr('id');
+                $.ajax({
+                    url:"action.php",
+                    type:"POST",
+                    data:{info_id:info_id},
+                    success:function(response){
+                        //console.log(response);
+                        data = JSON.parse(response);
+                        Swal.fire({
+                            title:'<strong>Product Info : ID('+data.product_id+')</strong>',
+                            type: 'info',
+                            html: '<b>Product Name :</b> '+data.product_name+'<br><b>Product Description :</b> '+data.product_description+'</br><b>Quantity in Stock :</b> '+data.quantitiy_in_stock+'<br><b>Reorder Quantity :</b> '+data.reorder_quantity+'<br><b>Price</b> R'+data.product_price,
+                        });
+                        
+                    }
+                    
+                    
+                });
+                
+            });
         });
 
     </script>
 </body>
 
 </html>
-

@@ -1,8 +1,4 @@
-<?php include 'uNavbar.php'; 
-/*include_once 'CrudController.php';
-$crudcontroller = new CrudController();
-$result = $crudcontroller->readData();*/
-?>
+
 <html lang="en">
     <head>
         <!-- Required meta tags -->
@@ -16,18 +12,76 @@ $result = $crudcontroller->readData();*/
         <title>eCommerce | User Dashboard</title>
     </head>
     <body id="wrapper">
+    <div id="results"></div>
+    <div id="camera"></div>
+
+    <script src="quagga.min.js"></script>
+
+    <script>
+
+        Quagga.init({
+            inputStream: {
+                name: "Live",
+                type: "LiveStream",
+                target: document.querySelector('#camera')    // Or '#yourElement' (optional)
+            },
+            decoder: {
+                readers: ["code_128_reader"]
+            }
+        }, function (err) {
+            if (err) {
+                console.log(err);
+                return
+            }
+            console.log("Initialization finished. Ready to start");
+            Quagga.start();
+        });
+
+        Quagga.onDetected(function (data) {
+            console.log(data.codeResult.code);
+            let CurBcode = data.codeResult.code;
+            document.querySelector('#results').innerText = data.codeResult.code;
+			 
+			// $.ajax({
+            //                type: "POST",
+            //                url: '/Products.php/setBcode', //check with ajax methods
+            //                //data: {upc: last_code}
+             //               data: {Bcode :data.codeResult.code}
+			//				success: function(data)
+              //      {
+                //        alert("success!");
+                  //  }
+                    //        });
+/// ajax a different way
+                    function UseCode(CurBcode) {
+  console.log('Barcode ID is :', CurBcode);
+  Barcode = CurBcode; 
+  window.location.href = "Ucart.php?Barcode=" + CurBcode;
+}
+        });
+
+    </script>
 
         <main role="main" >
 
+        <script> //get request using ajax
+            if(isset($_GET["Barcode"]))
+{
+    $Barcode = $_GET["Barcode"];
+    // use it to do crud
+}
+        </script>
+        
             <h3>Recent Purchase history</h3>
             <hr>
+        
             <div class="row">
                 <div class="col-lg-9">
                     <div class="card">
                         <div card-body>
                             <div class="table-responsive">
                                 <table id="datatable" style="border-radius: 5px" class="table table-dark table-hover">
-                                    <thead >
+                                    <thead>
                                         <tr style="border-bottom: gold 1px solid">
                                             <th scope="col">#</th>
                                             <th scope="col">Item</th>

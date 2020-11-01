@@ -10,50 +10,54 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <link href="css/dashboard.css" rel="stylesheet" type="text/css" />
-    <title>eCommerce |Client Accounts</title>
+    <title>Purchase</title>
 </head>
 
 <body id="wrapper">
 
     <main role="main">
 
-        <h3>Clients</h3>
+        <h3>Purchase</h3>
         <hr>
         <div class="table-responsive">
             <div class="row">
                 <div class="col-lg-6">
-                    <h4 class="mt-2 mb-2 text-primary">All Clients</h4>
+                    <h4 class="mt-2 mb-2 text-primary">All Purchase</h4>
                 </div>
                 <div class="col-lg-6">
-                    <button type="button" class="btn btn-primary m-1 float-right" data-toggle="modal" data-target="#addModal"><i class="fas fa-user-plus fa-lg"></i>&nbsp;&nbsp;Add New Clients</button>
+                    <button type="button" class="btn btn-primary m-1 float-right" data-toggle="modal" data-target="#addModal"><i class="fas fa-user-plus fa-lg"></i>&nbsp;&nbsp;Add New Purchase</button>
                     <!--<a href="#" class="btn btn-success m-1 float-right"><i class="fas fa-table fa-lg">&nbsp;&nbsp;Export to Excel</i></a>-->
                 </div>
             </div>
 
             <table id="datatable" style="border-radius: 5px" class="table table-dark table-hover">
-                <thead class="text-center">
+                <thead>
                     <tr style="border-bottom: gold 1px solid">
                         <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Surname</th>
-                        <th scope="col">ID Number</th>
-                        <th scope="col">Address</th>
-                        <th scope="col">Phone</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Username</th>
-                        <th scope="col">Password</th>
-                        <th scope="col">Modify</th>
+                        <th scope="col">Receipt Number</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Cost</th>
+
+                        <?php
+                        
+                        if (true){
+                            while($row = mysqli_fetch_assoc($result)) {
+                                 echo "Receipt Number: " . $row["ReceiptNumber"]. " - Date: " . $row["Date"]. " Cost" . $row["Cost"]. "<br>";
+                                }
+                            } else {
+                                 echo "0 results";
+                                }
+                        ?>
+                        
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="text-center text secondary">
+                    <tr>
                         <td>1</td>
-                        <td>Lorenzo</td>
-                        <td>Lazarus</td>
-                        <td>1234567891234</td>
-                        <td>2 Test st</td>
-                        <td>0681263258</td>
-                        <td>2Test@gmail.com</td>
+                        <td>Shoes</td>
+                        <td>R150.00</td>
+                        <td>1</td>
+                        <td><Good/td>
                         <td>
                             <a href="#" title="View Details" class="text-success"><i class="fas fa-info-circle fa-md"></i></a>&nbsp;&nbsp;
                             <a href="#" title="Edit" class="text-primary"><i class="fa-edit fa-lg"></i></a>&nbsp;&nbsp;
@@ -61,20 +65,21 @@
 
                         </td>
                     </tr>
+                    <tr>
+
+                    </tr>
                 </tbody>
             </table>
         </div>
-        
-        
 
-        <!-- Add new Customer -->
+
         <div class="modal fade" id="addModal">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
 
                     <!-- Modal Header -->
                     <div class="modal-header">
-                        <h4 class="modal-title">Add New CLients</h4>
+                        <h4 class="modal-title">New Purchase</h4>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
 
@@ -82,15 +87,7 @@
                     <div class="modal-body">
                         <form action="" method="post" id="form-data">
                             <div class="form-group">
-                                <input type="text" name="fname" class="form-control mt-3" placeholder="First Name" required>
-                                <input type="text" name="surname" class="form-control mt-3" placeholder="Surname" required>
-                                <input type="text" name="idNumber" class="form-control mt-3" placeholder="ID Number" required>
-                                <input type="text" name="Address" class="form-control mt-3" placeholder="Address" required>
-                                <input type="tel" name="phoneNo" class="form-control mt-3" placeholder="Phone Number" required>
-                                <input type="email" name="email" class="form-control mt-3" placeholder="Email" required>
-                                <div class="form-group">
-                                    <input type="submit" name="insert" id="insert" value="Add Employee" class="btn btn-danger btn-block mt-4">
-                                </div>
+                            <a href="scanner.php">Scanner</a>
                             </div>
                         </form>
                     </div>
@@ -142,3 +139,4 @@
 </body>
 
 </html>
+
